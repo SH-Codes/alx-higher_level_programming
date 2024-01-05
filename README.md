@@ -1,1 +1,1 @@
-0x00. Python - Hello, World
+0x08. Python - More Classes and Objects
