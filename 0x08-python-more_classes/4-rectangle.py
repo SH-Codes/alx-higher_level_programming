@@ -71,7 +71,7 @@ class Rectangle:
         rect = "Rectangle(" + str(self.__width)
         rect += ", " + str(self.__height) + ")"
         return (rect)#!/usr/bin/python3
-"""Defines a Rectangle class."""
+    """Defines a Rectangle class."""
 
 
 class Rectangle:
