@@ -1,16 +1,34 @@
-#!/usr/bin/bash
-# Display all HTTP methods allowed by the provided URL
+#!/bin/bash
 
-# Check if URL is provided
+# Function to test a method and report success/failure
+function test_method() {
+  local method="$1"
+  response=$(curl -s -o /dev/null -w "%{http_code}" -X "$method" "$url")
+  if [[ $response -ge 200 && $response -lt 300 ]]; then
+    echo "  * $method (Success: $response)"
+  fi
+}
+
+# Check if a URL argument is provided
 if [ -z "$1" ]; then
-    echo "Usage: $0 <URL>"
-    exit 1
+  echo "Error: Please provide a URL as an argument."
+  exit 1
 fi
 
-# Send a HEAD request to the provided URL using curl
-# -s: Silent mode, hides the progress meter
-# -I: Send a HEAD request instead of a GET request, to retrieve only the headers
-# "$1": Takes the first argument provided to the script as the URL
-# Then grep extracts the "Allow" header, which lists allowed HTTP methods
-# Finally, awk is used to print all HTTP methods listed in the header
-curl -sI "$1" | grep -i "Allow" | awk '{print substr($0, index($0,$2))}'
+# Define the URL from the argument
+url="$1"
+
+# List of common HTTP methods to test
+methods=(GET HEAD POST PUT DELETE PATCH OPTIONS)
+
+echo "Testing supported HTTP methods for $url:"
+
+# Loop through each method and call the test function
+for method in "${methods[@]}"; do
+  test_method "$method"
+done
+
+# Informative message if no methods were successful
+if [[ -z "$(echo "$methods")" ]]; then
+  echo "Warning: No successful responses received for any method."
+fi
