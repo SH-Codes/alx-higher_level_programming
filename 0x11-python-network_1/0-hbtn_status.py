@@ -1,12 +1,14 @@
 #!/usr/bin/python3
 
+"""Fetches https://alx-intranet.hbtn.io/status."""
 import urllib.request
-# Define the target URL
-url = "https://alx-intranet.hbtn.io/status"
-# Open the URL connection using a with statement
-with urllib.request.urlopen(url) as response:
-    # Read the response body
-    data = response.read().decode("utf-8")
-# Display the response body with a tab before '-'
-for line in data.splitlines():
-    print("\t-", line)
+
+
+if __name__ == "__main__":
+    req = urllib.request.Request("https://alx-intranet.hbtn.io/status")
+    with urllib.request.urlopen(req) as response:
+        body = response.read()
+        print("Body response:")
+        print("\t- type: {}".format(type(body)))
+        print("\t- content: {}".format(body))
+        print("\t- utf8 content: {}".format(body.decode("utf-8")))
