@@ -11,11 +11,9 @@ def find_peak(list_of_integers):
         int or None: Peak of list_of_integers if found, None otherwise.
     """
     size = len(list_of_integers)
-    
     # Edge case: Empty list
     if size == 0:
         return None
-    
     # Perform binary search to find peak
     left, right = 0, size - 1
     while left < right:
@@ -26,6 +24,5 @@ def find_peak(list_of_integers):
         else:
             # Peak must be on the left side (or at mid)
             right = mid
-    
     # Peak found at left or right index
     return list_of_integers[left]
